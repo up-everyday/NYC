@@ -19,7 +19,7 @@ cb['starttime']=pd.to_datetime(cb['starttime'])
 #将starttime设置为数据表索引
 cb = cb.set_index('starttime')
 #按月对骑行数据进行计数
-cb_month=cb.resample('1440T',how=len)
+cb_month=cb.resample('M').apply(len)
 #提取汇总后的bikeid字段
 group_cb_month=cb_month['bikeid']
 
