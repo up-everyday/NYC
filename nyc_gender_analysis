@@ -1,0 +1,15 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+#读取Citi Bike的数据并创建数据表
+file_name = r'D:/python_work/text_book/NYC/Bike-NYC.csv'
+cb=pd.DataFrame(pd.read_csv(file_name))
+#按用户性别进行汇总并计算不同性别的占比
+user_gender=cb.groupby('gender')['bikeid'].agg(len)/cb["bikeid"].count()*100
+#汇总用户性别占比饼图
+plt.rc('font', family='Microsoft YaHei', size=15)
+colors = ["#052B6C","#39A2E1","#EA1F29"]
+name=['未知', '男性', '女性']
+plt.pie(user_gender,labels=name,colors=colors,explode=(0, 0, 0),startangle=60,autopct='%1.1f%%')
+plt.title('Citi Bike用户性别占比')
+plt.legend(['未知', '男性', '女性'], loc='upper left')
+plt.show()
