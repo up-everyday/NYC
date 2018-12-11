@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+#读取Citi Bike的数据并创建数据表
+file_name = r'D:/python_work/text_book/NYC/Bike-NYC.csv'
+cb=pd.DataFrame(pd.read_csv(file_name))
+#查看出生日期的范围
+print(cb['birth year'].min(),cb['birth year'].max())
+cb['age']=2015-cb['birth year']
+#用户最小年龄17岁，最大年龄131岁
+cb['age'].min(),cb['age'].max()
+(17.0, 131.0)
+#对用户年龄进行分组
+bins = [0, 18, 30, 50, 131]
+group_age = ['少年', '青年', '中年', '老年']
+cb['group_age'] = pd.cut(cb['age'], bins, labels=group_age)
+#按年龄分组对数据进行汇总
+user_age=cb.groupby('group_age')['group_age'].agg(len)
+#生成用户年龄分布柱状图
+plt.rc('font', family='Microsoft YaHei', size=15)
+a=np.array([1,2,3,4])
+plt.bar([1,2,3,4],user_age,color='#052B6C',alpha=0.8,align='center',edgecolor='white')
+plt.xlabel('年龄分组')
+plt.ylabel('租赁次数')
+plt.title('Citi Bike用户年龄分布')
+plt.legend(['次数'], loc='upper right')
+plt.grid(color='#95a5a6',linestyle='--', linewidth=1,axis='y',alpha=0.4)
+plt.xticks(a,('少年','青年','中年','老年'))
+plt.show()
