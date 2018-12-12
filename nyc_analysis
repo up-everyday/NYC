@@ -6,23 +6,36 @@ import matplotlib.pyplot as plt
 file_name = r'D:/python_work/text_book/NYC/Bike-NYC.csv'
 cb=pd.DataFrame(pd.read_csv(file_name))
 
-#对starttime设置日期格式
+#对starttime设置日期格式,格式已经正确，不需转换
 cb['starttime']=pd.to_datetime(cb['starttime'])
 #将starttime设置为数据表索引
+
 cb = cb.set_index('starttime')
 #按月对骑行数据进行计数
-cb_month=cb.resample('M').apply(len)
+#cb_month=cb.resample('M').apply(len)
+cb_day=cb.resample('D').apply(len)
 #提取汇总后的bikeid字段
-group_cb_month=cb_month['bikeid']
+# group_cb_month=pd.Series(cb_month['bikeid'])
+group_cb_day=pd.Series(cb_day['bikeid'])
 
+print(type(group_cb_day))
+print(group_cb_day)
 #汇总按月汇总的骑行次数折线图
-plt.rc('font', family='STXihei', size=15)
-a=np.array([1,2,3,4,5,6,7,8,9,10,11,12])
-plt.plot(group_cb_month,'g8',group_cb_month,'g-',color='#39A2E1',
+plt.rc('font', family='Microsoft YaHei', size=15)
+#a=np.array([1,2,3,4,5,6,7,8,9,10,11,12])
+a=np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30])
+# plt.plot(group_cb_month,'g8',group_cb_month,'g-',color='#39A2E1',
+#          linewidth=3,markeredgewidth=3,markeredgecolor='#39A2E1',alpha=0.8)
+#'g-'   # green solid line
+plt.plot(group_cb_day,group_cb_day,'g^',color='#39A2E1',
          linewidth=3,markeredgewidth=3,markeredgecolor='#39A2E1',alpha=0.8)
-plt.xlabel('月份')
+plt.xlabel('天')
 plt.ylabel('租赁骑行次数')
-plt.title('2015年Citi Bike每月骑行次数')
-plt.grid( color='#95a5a6',linestyle='--', linewidth=1 ,axis='y',alpha=0.4)
-plt.xticks(a, ('1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月') )
+plt.title('2015年Citi Bike每天骑行次数')
+plt.grid()
+#plt.grid( color='#95a5a6',linestyle='--', linewidth=1 ,axis='y',alpha=0.4)
+#plt.xticks(a, ('1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月') )
+# plt.xticks(a, ('1d','2d','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20',
+#                '21','22','23','24','25','26','27','28','29','30') )
+plt.xticks(np.arange(1, 30, step=1))
 plt.show()
